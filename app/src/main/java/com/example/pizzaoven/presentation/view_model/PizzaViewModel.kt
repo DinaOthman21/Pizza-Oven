@@ -33,6 +33,12 @@ class PizzaViewModel() : ViewModel() {
         }
     }
 
+    fun onPizzaSelected(index: Int) {
+        _state.update {
+            it.copy(selectedPizzaIndex = index)
+        }
+    }
+
     private fun getPizzaList(): List<Pizza> {
         return listOf(
             Pizza(R.drawable.bread_1,PizzaSize.M,dropping=getDropping(),price = 16),

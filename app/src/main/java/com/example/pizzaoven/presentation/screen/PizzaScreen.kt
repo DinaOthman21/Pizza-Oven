@@ -32,12 +32,16 @@ fun PizzaScreen(
     viewModel: PizzaViewModel
 ) {
     val state by viewModel.state.collectAsState()
-    PizzaScreenContent(state = state)
+    PizzaScreenContent(
+        state = state,
+        onPizzaSelected = viewModel::onPizzaSelected
+    )
 }
 
 @Composable
 fun PizzaScreenContent(
-    state : PizzaScreenState
+    state : PizzaScreenState,
+    onPizzaSelected: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -50,7 +54,11 @@ fun PizzaScreenContent(
                 .padding(horizontal = 16.dp)
         )
         Spacer(Modifier.height(25.dp))
-        PizzaImage()
+        PizzaImage(
+            pizzas = state.pizzas,
+            selectedPizzaIndex = state.selectedPizzaIndex,
+            onPizzaPageChanged = onPizzaSelected
+        )
         Spacer(Modifier.height(32.dp))
         Text(
             text = "$17",
