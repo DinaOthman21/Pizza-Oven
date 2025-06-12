@@ -1,4 +1,4 @@
-package com.example.pizzaoven.presentation.components
+package com.example.pizzaoven.presentation.screen.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,6 +24,7 @@ fun PizzaButton(
     Button(
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(brown),
+        modifier = modifier,
         onClick = {}
     ) {
         Icon(

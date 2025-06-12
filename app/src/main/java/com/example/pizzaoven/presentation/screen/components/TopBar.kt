@@ -1,4 +1,4 @@
-package com.example.pizzaoven.presentation.components
+package com.example.pizzaoven.presentation.screen.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -30,7 +30,7 @@ fun TopBar(
             painter = painterResource(id = R.drawable.arrow_left),
             contentDescription = "back icon",
             modifier = Modifier.size(24.dp),
-            tint = Color.Black.copy(alpha = .7f)
+            tint = Color.Black.copy(alpha = .8f)
         )
         Text(
             text = "Pizza",
