@@ -39,13 +39,21 @@ class PizzaViewModel() : ViewModel() {
         }
     }
 
+    fun onPizzaSizeChanged(newSize: PizzaSize) {
+        val updatedPizzas = state.value.pizzas.toMutableList()
+        val selectedIndex = state.value.selectedPizzaIndex
+        val updatedPizza = updatedPizzas[selectedIndex].copy(size = newSize)
+        updatedPizzas[selectedIndex] = updatedPizza
+        _state.update { it.copy(pizzas = updatedPizzas) }
+    }
+
     private fun getPizzaList(): List<Pizza> {
         return listOf(
-            Pizza(R.drawable.bread_1,PizzaSize.M,dropping=getDropping(),price = 16),
-            Pizza(R.drawable.bread_2,PizzaSize.M,dropping=getDropping(),price = 22),
-            Pizza(R.drawable.bread_3,PizzaSize.M,dropping=getDropping(),price = 25),
-            Pizza(R.drawable.bread_4,PizzaSize.M,dropping=getDropping(),price = 30),
-            Pizza(R.drawable.bread_5,PizzaSize.M,dropping=getDropping(),price = 35),
+            Pizza(R.drawable.bread_1,dropping=getDropping(),price = 15),
+            Pizza(R.drawable.bread_2,dropping=getDropping(),price = 20),
+            Pizza(R.drawable.bread_3,dropping=getDropping(),price = 25),
+            Pizza(R.drawable.bread_4,dropping=getDropping(),price = 30),
+            Pizza(R.drawable.bread_5,dropping=getDropping(),price = 35),
         )
     }
 

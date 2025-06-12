@@ -20,6 +20,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.getValue
+import com.example.pizzaoven.model.PizzaSize
 import com.example.pizzaoven.presentation.screen.components.IngredientsRow
 import com.example.pizzaoven.presentation.screen.components.PizzaButton
 import com.example.pizzaoven.presentation.screen.components.PizzaImage
@@ -34,14 +35,16 @@ fun PizzaScreen(
     val state by viewModel.state.collectAsState()
     PizzaScreenContent(
         state = state,
-        onPizzaSelected = viewModel::onPizzaSelected
+        onPizzaSelected = viewModel::onPizzaSelected,
+        onPizzaSizeChanged = viewModel::onPizzaSizeChanged
     )
 }
 
 @Composable
 fun PizzaScreenContent(
     state : PizzaScreenState,
-    onPizzaSelected: (Int) -> Unit
+    onPizzaSelected: (Int) -> Unit,
+    onPizzaSizeChanged: (PizzaSize) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -61,7 +64,7 @@ fun PizzaScreenContent(
         )
         Spacer(Modifier.height(32.dp))
         Text(
-            text = "$17",
+            text = "$${state.pizzas[state.selectedPizzaIndex].totalPrice}",
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -69,7 +72,10 @@ fun PizzaScreenContent(
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.height(25.dp))
-        SizeRow(onItemClick = {})
+        SizeRow(
+            selectedSize = state.pizzas[state.selectedPizzaIndex].size,
+            onItemClick = onPizzaSizeChanged
+        )
         Spacer(Modifier.weight(.4f))
         Text(
             text = "CUSTOMIZE YOUR PIZZA",
