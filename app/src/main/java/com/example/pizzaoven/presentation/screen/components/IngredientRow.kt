@@ -1,5 +1,6 @@
 package com.example.pizzaoven.presentation.screen.components
 
+import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -23,17 +24,19 @@ import com.example.pizzaoven.ui.theme.green
 @Composable
 fun IngredientsRow(
     ingredients: List<Dropping>,
-    onIngredientClick: (Int) -> Unit
+    onIngredientClick: (Dropping) -> Unit,
+    selectedDroppings: List<Dropping>
 ) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
         items(ingredients.size) { index ->
             val ingredient = ingredients[index]
+            val isSelected = selectedDroppings.any { it.index == ingredient.index }
             IngredientItem(
                 imageRes = painterResource( ingredient.image),
-                isSelected = ingredient.isSelected,
-                onClick = { onIngredientClick(index) },
+                isSelected = isSelected,
+                onClick = {  onIngredientClick(ingredient) },
                 modifier = Modifier.padding(end = 8.dp)
             )
         }
@@ -49,10 +52,10 @@ fun IngredientItem(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.size(70.dp),
+        modifier = modifier.size(60.dp),
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) green.copy(alpha = .2f) else Color.Transparent
+            containerColor = if (isSelected) Color(0xFFD8FAE2) else Color.Transparent
         ),
         contentPadding = PaddingValues(0.dp),
     ) {

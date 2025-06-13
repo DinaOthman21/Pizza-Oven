@@ -47,6 +47,26 @@ class PizzaViewModel() : ViewModel() {
         _state.update { it.copy(pizzas = updatedPizzas) }
     }
 
+    fun onDroppingClick(index: Int) {
+        val selectedIndex = state.value.selectedPizzaIndex
+        val updatedPizzas = state.value.pizzas.toMutableList()
+        val selectedPizza = updatedPizzas[selectedIndex]
+
+        val selectedDropping = state.value.dropping[index]
+        val updatedDroppings = selectedPizza.selectedDroppings.toMutableList()
+
+        if (updatedDroppings.any { it.index == selectedDropping.index }) {
+            updatedDroppings.removeAll { it.index == selectedDropping.index }
+        } else {
+            updatedDroppings.add(selectedDropping)
+        }
+
+        val updatedPizza = selectedPizza.copy(selectedDroppings = updatedDroppings)
+        updatedPizzas[selectedIndex] = updatedPizza
+
+        _state.update {it.copy(pizzas = updatedPizzas)}
+    }
+
     private fun getPizzaList(): List<Pizza> {
         return listOf(
             Pizza(R.drawable.bread_1,dropping=getDropping(),price = 15),
@@ -60,8 +80,8 @@ class PizzaViewModel() : ViewModel() {
      fun getDropping(): List<Dropping> {
         return listOf(
             Dropping(index=0,image=R.drawable.basil_3,price=5,getListOfDropping("basil") ),
-            Dropping(index=2,image=R.drawable.onion_3,price=5,ingredients=getListOfDropping("onion")),
-            Dropping(index=1,image=R.drawable.broccoli_3,price=5,ingredients=getListOfDropping("broccoli")),
+            Dropping(index=1,image=R.drawable.onion_3,price=5,ingredients=getListOfDropping("onion")),
+            Dropping(index=2,image=R.drawable.broccoli_3,price=5,ingredients=getListOfDropping("broccoli")),
             Dropping(index=3,image=R.drawable.mushroom_3,price=5,ingredients=getListOfDropping("mushroom")),
             Dropping(index=4,image=R.drawable.sausage_3,price=5,ingredients=getListOfDropping("sausage")),
         )

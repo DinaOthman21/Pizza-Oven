@@ -36,7 +36,8 @@ fun PizzaScreen(
     PizzaScreenContent(
         state = state,
         onPizzaSelected = viewModel::onPizzaSelected,
-        onPizzaSizeChanged = viewModel::onPizzaSizeChanged
+        onPizzaSizeChanged = viewModel::onPizzaSizeChanged,
+        onIngredientClick = viewModel::onDroppingClick
     )
 }
 
@@ -44,7 +45,8 @@ fun PizzaScreen(
 fun PizzaScreenContent(
     state : PizzaScreenState,
     onPizzaSelected: (Int) -> Unit,
-    onPizzaSizeChanged: (PizzaSize) -> Unit
+    onPizzaSizeChanged: (PizzaSize) -> Unit,
+    onIngredientClick: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -55,6 +57,8 @@ fun PizzaScreenContent(
         TopBar(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp)
+
         )
         Spacer(Modifier.height(25.dp))
         PizzaImage(
@@ -76,7 +80,7 @@ fun PizzaScreenContent(
             selectedSize = state.pizzas[state.selectedPizzaIndex].size,
             onItemClick = onPizzaSizeChanged
         )
-        Spacer(Modifier.weight(.4f))
+        Spacer(Modifier.weight(1f))
         Text(
             text = "CUSTOMIZE YOUR PIZZA",
             fontSize = 14.sp,
@@ -89,7 +93,9 @@ fun PizzaScreenContent(
         Spacer(Modifier.weight(0.6f))
         IngredientsRow(
             ingredients = state.dropping,
-            onIngredientClick = {}
+            onIngredientClick = { ingredient ->
+                onIngredientClick(ingredient.index)},
+            selectedDroppings = state.pizzas[state.selectedPizzaIndex].selectedDroppings,
         )
         Spacer(modifier = Modifier.weight(1f))
         PizzaButton(
